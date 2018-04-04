@@ -63,30 +63,7 @@ export default class App extends Component {
         this.setState({ sessions: [...this.state.sessions, {...data.val(), key: data.key }] })
         var session = data
         fbc.database.public.allRef('questions').child(session.key).on('child_added', data => {
-          this.setState({ questions: [...this.state.questions, {...data.val(), key: data.key }] })
-          fbc.database.public.allRef('votes').child(data.key).on('child_added', vote => {
-            const userVote = vote.key === client.currentUser.id
-            var questions = this.state.questions.map(question => 
-              question.key === data.key ?
-              { ...question, myVote: userVote, score: question.score + 1}
-              : 
-              question
-            )
-            this.setState({questions})
-          })
-          fbc.database.public.allRef('votes').child(data.key).on('child_removed', vote => {
-            var userVote = true
-            if (vote.key === client.currentUser.id){
-              userVote = false
-            }
-            var questions = this.state.questions.map(question => 
-              question.key === data.key ?
-                { ...question, myVote: userVote, score: question.score - 1}
-                : 
-                question
-            )
-            this.setState({questions})
-          })
+          this.setState({ questions: [...this.state.questions, {...data.val(), key: data.key }] }) 
         })
         fbc.database.public.allRef('questions').child(session.key).on('child_changed', data => {
           var questions = this.state.questions
@@ -720,9 +697,7 @@ export default class App extends Component {
  
 
   makePin = (question) => {
-    // if (this.canPin()) {
-      fbc.database.public.allRef('questions').child(question.session).child(question.key).update({"order": 0, "approve": true, 'block': false, 'new': false})
-    // }
+    fbc.database.public.allRef('questions').child(question.session).child(question.key).update({"order": 0, "approve": true, 'block': false, 'new': false})
     this.newOrder(question)
   }
 
@@ -730,25 +705,10 @@ export default class App extends Component {
     const newQuestions = this.state.questions.filter(question => question.session === this.state.session)
     newQuestions.map((c, index) => {
       if (c.key !== question.key) {
-        fbc.database.public.allRef('questions').child(c.session).child(c.key).update({"order": c.order + 1})
+        fbc.database.public.allRef('questions').child(c.session).child(c.key).update({"order": index + 1})
       }
     })
   }
-
-  // checkOrder = () => {
-  //   const updates = this.state.questions.map((c, index) => {
-  //     if (c.order !== index) {
-  //       this.onUpdate(c, "order", index) // update pending content
-  //       if (this.state.publishedContent[c.key]) {
-  //         return publishedContentRef().child(c.key).child('order').set(index) // update published content
-  //       }
-  //     }
-  //     return Promise.resolve()
-  //   })
-
-  //   // Publish the order changes only
-  //   Promise.all(updates).then(() => this.doPublish({} /* no content updated */))
-  // }
 
   makeAnswer = (question) => {
     const time = new Date().getTime()
