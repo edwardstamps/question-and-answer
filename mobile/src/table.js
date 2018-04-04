@@ -31,20 +31,8 @@ export class MyList extends Component {
     }
 
   render() {
-    const showAnswer = this.props.showAnswer
-    const showRecent = this.props.showRecent
     const moderator = this.props.moderator
-    let newQuestions = this.props.questions
-
-    if (showAnswer === true){
-      newQuestions = newQuestions.filter(item => item.answered === true)
-      newQuestions.sort(function (a,b){
-        return b.lastEdit - a.lastEdit
-      })
-    }
-    if (showAnswer === false){
-      newQuestions = newQuestions.filter(item => item.answered === false)
-    }
+    let newQuestions = this.props.questions.filter(item => item.answered === false)
 
     let testQuestions = this.props.questions
     if (moderator.length > 0){    
@@ -61,7 +49,7 @@ export class MyList extends Component {
       ListFooterComponent={<View style={{height: 100}}></View>}
       renderItem={({item}) => {
         if (moderator.length > 0){
-          if (moderator[0].approve !== true && item.answered === false) {
+          if (moderator[0].approve !== true) {
             return(
               <View style={s.listContainer}>
                 <View style={s.leftContainer}>
@@ -82,7 +70,7 @@ export class MyList extends Component {
               </View>
             )
           }
-          if (moderator[0].approve === true && item.approve === true && item.answered === false){
+          if (moderator[0].approve === true && item.approve === true){
               return(
                 <View style={s.listContainer}>
                   <View style={s.leftContainer}>
@@ -104,27 +92,7 @@ export class MyList extends Component {
               )
           }
           else {
-            if (item.answered === true){
-              return (
-              <View style={s.listContainer}>
-                <View style={s.leftContainer}>
-                </View>
-                <View style={s.rightContainer}>
-                  <Text style={s.questionText}>{item.text}</Text>
-                  {item.anom === false &&
-                  <Text style={s.nameText}>
-                    -{item.creator.firstName} {item.creator.lastName}
-                  </Text>
-                  }
-                  {item.anom === true &&
-                  <Text style={s.nameText}>
-                    -Anonymous
-                  </Text>
-                  }
-                </View>
-              </View>
-              )
-            }
+            return null
           }
         }
         else {
@@ -160,17 +128,8 @@ export class MyList extends Component {
       return (
         <View>
           <View style={{height:60}}>
-            <View style={s.buttonContainer}>
-              <View style={s.divider}/>
-              <TouchableOpacity style={s.button1}><Text style={s.dashboardButton}>Popular</Text></TouchableOpacity>
-              <View style={s.dividerSm}/>
-              <TouchableOpacity style={s.button2} onPress={this.props.findOrderDate}><Text style={s.dashboardButton}>Recent</Text></TouchableOpacity>
-              <View style={s.dividerSm}/>
-              <TouchableOpacity style={s.button2} onPress={this.props.showAnswered}><Text style={s.dashboardButton}>Answered</Text></TouchableOpacity>
-              <View style={s.divider}/>
-            </View>
           </View>
-          <View style={{marginTop: 96}}>
+          <View style={{marginTop: 100}}>
             <Text style={{marginTop: 30, textAlign: "center", fontSize: 20, color: '#9B9B9B', marginBottom: 5, height: 25}}>Be the First to Ask a Question!</Text>
             <TouchableOpacity style={{marginTop: 5, height: 25}} onPress={this.props.showModal}><Text style={{textAlign: "center", fontSize: 18, color: client.primaryColor}}>Tap here to get started</Text></TouchableOpacity>
           </View>

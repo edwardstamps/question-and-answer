@@ -33,8 +33,6 @@ export default class CustomCell extends Component {
         <span className='cellBoxTop'>
           <p className='introText'>{title}</p>
           <p className='timeText'>{difference}</p>
-          <img src={require('./icons/Inactive.png')} alt="inactive"/>
-          <p className='timeText'>{'\xa0'}{task.score}</p>
         </span>
         <p className="questionText">"{task.text}"</p>
         { task.anom

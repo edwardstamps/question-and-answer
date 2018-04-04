@@ -35,7 +35,7 @@ export default class CustomButtons extends Component {
     if (approve) {
       return (
         <span>
-    {((this.props.session !== 'All') ? <button className="pinButton" onClick={() => makePin(task)}><img className="pinImage" src={require('./icons/thumbtack.svg')} alt="" />Move to Top</button> : <div style={{height: 25}}/>)}
+        {((this.props.session !== 'All') ? <button className="pinButton" onClick={() => makePin(task)}><img className="pinImage" src={require('./icons/thumbtack.svg')} alt="" />Move to Top</button> : <div style={{height: 25}}/>)}
           <span className='cellBoxRight'>
             <img className='button1' onClick={() => makeAnswer(task)} src={require('./icons/check.svg')} alt="answered"/>
             <img className='button1' onClick={() => blockQuestion(task)} src={require('./icons/deleteocircle.svg')} alt="block"/>
@@ -44,7 +44,7 @@ export default class CustomButtons extends Component {
       )
     }
 
-    if (block) {
+    if (block && this.props.session !== 'All') {
       return (
         <span style={{marginTop: 25}}>
           <span className='cellBoxRight'>
@@ -53,6 +53,9 @@ export default class CustomButtons extends Component {
           </span>
         </span>
       )
+    }
+    else {
+      return null
     }
   }
 }

@@ -74,7 +74,6 @@ export default class App extends Component {
               questions[i].score = score
               questions[i].key = data.key
               this.setState({questions})
-              break
             }
           }
         })
@@ -125,7 +124,7 @@ export default class App extends Component {
     const { questions, sessions } = this.state 
     const time = new Date().getTime()
     questions.sort(function (a,b){
-      return b.dateCreate - a.dateCreate
+      return a.dateCreate - b.dateCreate
     })
     var newQuestions = questions
     if (this.state.session !== 'All'){
@@ -691,24 +690,37 @@ export default class App extends Component {
 
   makeApprove = (question) => {
     const time = new Date().getTime()
-    fbc.database.public.allRef('questions').child(question.session).child(question.key).update({"approve": true, 'block': false, 'new': false, 'lastEdit': time})
+    const newQuestions = this.state.questions.filter(currentQuestion => question.session === currentQuestion.session && currentQuestion.block === false && currentQuestion.answered === false)
+    const order = newQuestions.length
+    this.makeOrder(question)
+    fbc.database.public.allRef('questions').child(question.session).child(question.key).update({"approve": true, 'block': false, 'new': false, 'lastEdit': time, order: order || 0})
   }
 
  
 
   makePin = (question) => {
     fbc.database.public.allRef('questions').child(question.session).child(question.key).update({"order": 0, "approve": true, 'block': false, 'new': false})
-    this.newOrder(question)
+    this.newOrderTop(question)
   }
 
-  newOrder = (question) => {
-    const newQuestions = this.state.questions.filter(question => question.session === this.state.session)
+  newOrderTop = (question) => {
+    const newQuestions = this.state.questions.filter(currentQuestion => currentQuestion.session === this.state.session && currentQuestion.block === false & currentQuestion.answered === false)
     newQuestions.map((c, index) => {
       if (c.key !== question.key) {
         fbc.database.public.allRef('questions').child(c.session).child(c.key).update({"order": index + 1})
       }
     })
   }
+
+  makeOrder = (question) => {
+    const newQuestions = this.state.questions.filter(currentQuestion => currentQuestion.session === this.state.session && currentQuestion.block === false & currentQuestion.answered === false)
+    newQuestions.map((c, index) => {
+      if (c.key !== question.key) {
+        fbc.database.public.allRef('questions').child(c.session).child(c.key).update({"order": index})
+      }
+    })
+  }
+
 
   makeAnswer = (question) => {
     const time = new Date().getTime()

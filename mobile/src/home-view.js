@@ -293,6 +293,9 @@ class HomeView extends Component {
 
     orderSort = (questions) => {
       questions.sort(function (a,b){
+        return a.dateCreate - b.dateCreate
+      })
+      questions.sort(function (a,b){
         return a.order - b.order
       })
     }
@@ -310,6 +313,7 @@ class HomeView extends Component {
     createQuestion = (ref, question, anom) => {
       var time = new Date().getTime()
       var questionName = question.trim()
+      var newQuestions = this.state.questions.filter(item => item.block === false && item.answered === false && item.session === this.state.session.key)
       if (questionName.length === 0) {
         this.setState({showError: "red"})
       }
@@ -334,7 +338,7 @@ class HomeView extends Component {
           lastEdit: time, 
           session: this.state.session.key,
           sessionName: this.state.session.sessionName,
-          order: this.state.questions.length || 0
+          order: newQuestions.length || 0
         })
         .then(() => {
           this.setState({question: '', anom: false, showError: "white"})
