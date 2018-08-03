@@ -118,7 +118,7 @@ export default class CustomModal extends Component {
           )} /> : <Text style={{textAlign: "center", marginTop: 100, fontSize: 20, color: '#9B9B9B', flex: 1, }}>No Search Results</Text> }
           <View style={{borderTopColor:"#b7b7b7", borderTopWidth: 1, backgroundColor: '#EFEFEF'}}>
             <TouchableOpacity disabled={this.props.disable} onPress={this.props.closeSessionModal} style={[s.bigButton, colorStyle]}>
-              <Text style={{fontSize: 14, textAlign: "center", marginTop: 13, color: "white"}}>Join Q&amp;A</Text>
+              <Text style={{fontSize: 14, textAlign: "center", marginTop: 13, color: "white"}}>Join Unvarnished Truth</Text>
             </TouchableOpacity>
           </View>
         </View>
