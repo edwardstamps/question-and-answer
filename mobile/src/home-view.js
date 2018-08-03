@@ -54,7 +54,7 @@ class HomeView extends Component {
       newValue: '', 
       marginTop: 18, 
       animation: "none",
-      title: "Q & A",
+      title: "Unvarnished Truth",
       questionAsk: false,
       questionError: "Ask Question",
       topBorder: "#EFEFEF",

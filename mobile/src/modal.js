@@ -228,7 +228,7 @@ export default class CustomModal extends Component {
     if (this.props.sessions.length > 0) {
       return ( 
         <View style={{borderBottomColor: "#b7b7b7", borderBottomWidth: 1}}>
-          <Text style={s.modHeader}> Please confirm your session</Text>
+          <Text style={s.modHeader}> Please select your topic</Text>
           <View style={{backgroundColor: '#9B9B9B', padding: 10}}>
             <View style={{flexDirection: "row", backgroundColor: "#FFFFFF", borderBottomColor: "#b7b7b7", borderBottomWidth: 1, borderRadius: 5, height: 40}}>
               {this.state.search ? <View style={{width: 40}} /> : <TouchableOpacity style={s.circleBoxMargin}><Text style={s.whiteText}>?</Text></TouchableOpacity>}
@@ -248,9 +248,9 @@ export default class CustomModal extends Component {
       return (
         <View>
           <View style={{borderBottomColor: "#b7b7b7", borderBottomWidth: 1, marginBottom: 150}}>
-            <Text style={s.modHeader}> Please confirm your session</Text>
+            <Text style={s.modHeader}> Please select your topic</Text>
           </View >
-            <Text style={{textAlign: "center", fontSize: 20, color: '#9B9B9B', marginBottom: 5}}>No Live Sessions Available</Text>
+            <Text style={{textAlign: "center", fontSize: 20, color: '#9B9B9B', marginBottom: 5}}>No Topics Available</Text>
         </View>
       )
     }

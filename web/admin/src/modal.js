@@ -35,12 +35,12 @@ export class CustomModal extends Component {
       const sessions = this.props.sessions
       return(
       <Modal 
-      isOpen={this.props.openVar}
-      onAfterOpen={this.makeFocus}
-      onRequestClose={this.props.closeModal}
-      contentLabel="Modal"
-      className="Modal"
-      overlayClassName="Overlay"
+        isOpen={this.props.openVar}
+        onAfterOpen={this.makeFocus}
+        onRequestClose={this.props.closeModal}
+        contentLabel="Modal"
+        className="Modal"
+        overlayClassName="Overlay"
       >
         <div> 
           <div style={{padding: 25, paddingLeft: 20}}>
